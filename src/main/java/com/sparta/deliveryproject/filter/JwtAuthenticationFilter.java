@@ -1,13 +1,11 @@
 package com.sparta.deliveryproject.filter;
 
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.deliveryproject.dto.LoginRequestDto;
+import com.sparta.deliveryproject.requestDto.LoginRequestDto;
 import com.sparta.deliveryproject.entity.UserRoleEnum;
-import com.sparta.deliveryproject.service.JwtUtil;
 import com.sparta.deliveryproject.security.UserDetailsImpl;
-import com.sparta.deliveryproject.service.JwtUtil;
+import com.sparta.deliveryproject.serviceImpl.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,15 +14,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import java.io.IOException;
+
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/user/login");
+        setFilterProcessesUrl("/api/users/login");
     }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {

@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Orders, Long> {
     Optional<Orders> findByMenuIdAndUserUserID(Long menuId, Long userID);
 
-
     List<Orders> findByUserUserID(Long userID);
 
     Optional<Orders> deleteByMenuIdAndUserUserID(Long menuId, Long userID);

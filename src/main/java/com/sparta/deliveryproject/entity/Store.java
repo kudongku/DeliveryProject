@@ -1,6 +1,5 @@
 package com.sparta.deliveryproject.entity;
 
-import com.sparta.deliveryproject.dto.StoreRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,30 +39,23 @@ public class Store {
     @Column(nullable = false)
     private Long totalSales = 0L;
 
-
-    public Store(StoreRequestDto storeRequestDto, Category category) {
-        this.name = storeRequestDto.getName();
-        this.address = storeRequestDto.getAddress();
-        this.introduce = storeRequestDto.getIntroduce();
-        this.category = category;
-    }
-
-    public Store(StoreRequestDto storeRequestDto, Category category, User user) {
-        this.name = storeRequestDto.getName();
-        this.address = storeRequestDto.getAddress();
-        this.introduce = storeRequestDto.getIntroduce();
+    public Store(String name, String address, String introduce, Category category, User user) {
+        this.name = name;
+        this.address = address;
+        this.introduce = introduce;
         this.category = category;
         this.user = user;
     }
 
-    public void edit(StoreRequestDto storeRequestDto, Category category) {
-        this.name = storeRequestDto.getName();
-        this.address = storeRequestDto.getAddress();
-        this.introduce = storeRequestDto.getIntroduce();
+    public void edit(String name, String address, String introduce, Category category) {
+        this.name = name;
+        this.address = address;
+        this.introduce = introduce;
         this.category = category;
     }
-    public void incrementSales(Long totalPrice){
-        this.orderCount ++;
+
+    public void incrementSales(Long totalPrice) {
+        this.orderCount++;
         this.totalSales += totalPrice;
     }
 }

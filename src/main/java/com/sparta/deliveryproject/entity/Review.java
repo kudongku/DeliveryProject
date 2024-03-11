@@ -1,13 +1,14 @@
 package com.sparta.deliveryproject.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*;
-
+import lombok.Setter;
 
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "reviews")
 public class Review {
@@ -20,7 +21,7 @@ public class Review {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)

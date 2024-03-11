@@ -1,8 +1,7 @@
 package com.sparta.deliveryproject.controller;
 
-import com.sparta.deliveryproject.dto.CategoryRequestDto;
-import com.sparta.deliveryproject.dto.CategoryResponseDto;
-import com.sparta.deliveryproject.dto.CommonResponseDto;
+import com.sparta.deliveryproject.requestDto.CategoryRequestDto;
+import com.sparta.deliveryproject.responseDto.CategoryResponseDto;
 import com.sparta.deliveryproject.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,36 +12,33 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/category")
+@RequestMapping("/api")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/categoryList")
-    public ResponseEntity<List<CategoryResponseDto>> getCategoryList(){
+    @GetMapping("/public/categories")
+    public ResponseEntity<List<CategoryResponseDto>> getCategoryList() {
         List<CategoryResponseDto> categoryResponseDtoList = categoryService.getCategoryList();
         return ResponseEntity.status(200).body(categoryResponseDtoList);
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping()
-    public ResponseEntity<CommonResponseDto> createCategory(@RequestBody CategoryRequestDto categoryRequestDto){
+    @PostMapping("/categories")
+    public void createCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         categoryService.createCategory(categoryRequestDto);
-        return ResponseEntity.status(200).body(new CommonResponseDto(200, "카테고리 등록 성공"));
     }
 
     @Secured("ROLE_ADMIN")
-    @PutMapping("/{category_id}")
-    public ResponseEntity<CommonResponseDto> editCategory(@RequestBody CategoryRequestDto categoryRequestDto, @PathVariable Long category_id){
-        categoryService.editCategory(categoryRequestDto, category_id);
-        return ResponseEntity.status(200).body(new CommonResponseDto(200, "카테고리 수정 성공"));
+    @PutMapping("/categories/{categoryId}")
+    public void editCategory(@RequestBody CategoryRequestDto categoryRequestDto, @PathVariable Long categoryId) {
+        categoryService.editCategory(categoryRequestDto, categoryId);
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping("/{category_id}")
-    public ResponseEntity<CommonResponseDto> deleteCategory(@PathVariable Long category_id){
-        categoryService.deleteCategory(category_id);
-        return ResponseEntity.status(200).body(new CommonResponseDto(200, "카테고리 삭제 성공"));
+    @DeleteMapping("categories/{categoryId}")
+    public void deleteCategory(@PathVariable Long categoryId) {
+        categoryService.deleteCategory(categoryId);
     }
 
 }
