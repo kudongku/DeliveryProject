@@ -8,7 +8,7 @@ import com.sparta.deliveryproject.responseDto.MenuResponseDto;
 import java.util.List;
 
 public interface MenuService {
-    List<MenuResponseDto> getMenuListByStore(Long storeId);
+    List<MenuResponseDto> getMenuListByStore(Long storeId, int page, int size, String sortBy, Boolean isAsc);
 
     List<MenuResponseDto> getTopThreeSalesMenuListByStore(Long storeId);
 

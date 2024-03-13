@@ -10,8 +10,8 @@ import static com.sparta.deliveryproject.entity.QMenu.menu;
 
 @RequiredArgsConstructor
 public class MenuRepositoryQueryImpl implements MenuRepositoryQuery {
-    private final JPAQueryFactory jpaQueryFactory;
 
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public List<Menu> getTopThreeSalesMenuListByStore(Long storeId) {

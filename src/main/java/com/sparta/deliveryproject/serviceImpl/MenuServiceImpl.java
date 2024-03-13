@@ -11,6 +11,9 @@ import com.sparta.deliveryproject.requestDto.MenuRequestDto;
 import com.sparta.deliveryproject.responseDto.MenuResponseDto;
 import com.sparta.deliveryproject.service.MenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +29,16 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MenuResponseDto> getMenuListByStore(Long storeId) {
+    public List<MenuResponseDto> getMenuListByStore(Long storeId, int page, int size, String sortBy, Boolean isAsc) {
         Store store = storeRepository.findById(storeId).orElseThrow(
                 () -> new NullPointerException("해당 id의 매장이 없습니다.")
         );
-        List<Menu> menuList = menuRepository.findAllByStore(store);
+
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+
+        List<Menu> menuList = menuRepository.findAllByStore(store, pageable);
 
         if (menuList.isEmpty()) {
             throw new NullPointerException("해당 매장에 메뉴가 없습니다.");

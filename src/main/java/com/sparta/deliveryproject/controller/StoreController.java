@@ -1,10 +1,12 @@
 package com.sparta.deliveryproject.controller;
 
 import com.sparta.deliveryproject.requestDto.StoreRequestDto;
+import com.sparta.deliveryproject.responseDto.StoreProjection;
 import com.sparta.deliveryproject.responseDto.StoreResponseDto;
 import com.sparta.deliveryproject.security.UserDetailsImpl;
 import com.sparta.deliveryproject.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,8 +23,14 @@ public class StoreController {
 
     // 카테고리별 메장 조회
     @GetMapping("/public/stores/category/{categoryId}")
-    public ResponseEntity<List<StoreResponseDto>> getStoreListByCategory(@PathVariable Long categoryId) {
-        List<StoreResponseDto> storeList = storeService.getStoreListByCategory(categoryId);
+    public ResponseEntity<Page<StoreProjection>> getStoreListByCategory(
+            @PathVariable Long categoryId,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") Boolean isAsc
+    ) {
+        Page<StoreProjection> storeList = storeService.getStoreListByCategory(categoryId, page, size, sortBy, isAsc);
         return ResponseEntity.status(200).body(storeList);
     }
 

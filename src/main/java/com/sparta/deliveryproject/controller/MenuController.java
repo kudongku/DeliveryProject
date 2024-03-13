@@ -20,8 +20,14 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping("/public/menus/{storeId}")
-    public ResponseEntity<List<MenuResponseDto>> getMenuListByStore(@PathVariable Long storeId) {
-        List<MenuResponseDto> menuList = menuService.getMenuListByStore(storeId);
+    public ResponseEntity<List<MenuResponseDto>> getMenuListByStore(
+            @PathVariable Long storeId,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") Boolean isAsc
+    ) {
+        List<MenuResponseDto> menuList = menuService.getMenuListByStore(storeId, page, size, sortBy, isAsc);
         return ResponseEntity.status(200).body(menuList);
     }
 
